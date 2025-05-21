@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Image Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sports Image Classifier</h1>
+            <p>Upload an image of a sports activity and our AI will identify it</p>
+        </header>
+
+        <div class="upload-container">
+            <form method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="file-upload-wrapper">
+                    <input type="file" id="file" name="file" class="file-upload" accept="image/*" required>
+                    <label for="file" class="file-upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Choose an image...</span>
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn">Classify Image</button>
+            </form>
+        </div>
+
+        {% if filename %}
+        <div class="results-container">
+            <div class="image-preview">
+                <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+            </div>
+            <div class="prediction-result">
+                <h2>Prediction Result</h2>
+                <div class="result-card">
+                    <span class="prediction-label">{{ prediction }}</span>
+                   <!--<span class="confidence-level">{{ confidence }}% confidence</span>-->
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <footer>
+            <p>© 2023 Sports Classifier | AI-Powered Image Recognition</p>
+        </footer>
+    </div>
+
+    <script>
+        // Display filename when file is selected
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0].name;
+            const label = document.querySelector('.file-upload-label span');
+            label.textContent = fileName;
+        });
+    </script>
+</body>
+</html>
